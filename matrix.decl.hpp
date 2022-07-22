@@ -13,6 +13,8 @@ Author: R. Tonneau (romain.tonneau@gmail.com)
 #include <algorithm>
 #include <numeric>
 #include <functional>
+#include <iterator> // For std::forward_iterator_tag
+#include <cstddef>  // For std::ptrdiff_t
 
 // LOCAL INCLUDES
 //#include "matrix.forward.hpp"
@@ -27,6 +29,8 @@ namespace geometry{
     template<class T=double>
     class Matrix
     {
+        using MatrixType = std::vector<T>;
+
     public: // attributes
         std::vector<T> m_data{};
         std::vector<std::size_t> m_size{0, 0};
@@ -102,7 +106,7 @@ namespace geometry{
         std::size_t nColumns() const {return m_size.at(1);}
         std::size_t length() const {return utils::multiplyElements(m_size);}
         const std::vector<std::size_t>& dimension() const {return m_size;}
-        bool isZero() const {utils::areAllElementsZero(m_data);}
+        bool isZero() const {return utils::areAllElementsZero(m_data);}
         T at(std::size_t index) const {return m_data.at(index);}
 
         void print() const;
@@ -110,9 +114,15 @@ namespace geometry{
         std::vector<T> getColumn (const std::size_t line) const;
 
         // ----------------------- DATA MODIFIER MEMBERS ----------------------
-        void setValues(const std::vector<T> &values);
         void clear() {std::fill(m_data.begin(), m_data.end(), 0);}
         void reset() {m_data.clear(); m_size.clear();}
+        void setValues(const std::vector<T> &values);
+
+        // ----------------------------- ITERATORS ----------------------------
+        typename MatrixType::iterator begin() { return m_data.begin(); }
+        typename MatrixType::iterator end()   { return m_data.end(); }
+        typename MatrixType::const_iterator cbegin() const { return m_data.cbegin(); }
+        typename MatrixType::const_iterator cend()   const { return m_data.cend(); }
 
         //TO BE IMPLEMENTED
         void resize(const std::size_t line, const std::size_t column);
@@ -147,12 +157,8 @@ namespace geometry{
         }
 
         // ----------------------- DATA MODIFIER MEMBERS ----------------------
-        /*
-        void setSize(std::initializer_list<std::size_t> list){
-            if ()
-            std::copy(list.begin(), list.end(), m_size.begin());
-        }
-        */
+        void setSize(std::initializer_list<std::size_t> list);
+
     };
 
 }

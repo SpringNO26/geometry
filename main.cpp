@@ -43,14 +43,12 @@ int main()
               << x.isZero()
               << "\n";
 
-    /*
     x = x * y;
     x.print();
 
     geometry::Matrix<int> a{x};
     x = x*x;
     a.print();
-    */
 
     x.print();
     x += 5.4;
@@ -58,6 +56,13 @@ int main()
 
     std::cout << "ok up to here\n";
 
+    std::vector<int> data{};
+    std::copy(std::begin(y), std::end(y), std::back_inserter(data));
+    x.setValues(data);
+    x.print();
+
+
+    /*
     geometry::Matrix<int> xx(geometry::utils::AdditionMCH<int>(50, &x.m_data, &x.m_size));
     geometry::Matrix<int> yy;
 
@@ -70,4 +75,5 @@ int main()
     zz = yy;
     zz += 0.1;
     zz.print();
+    */
 }

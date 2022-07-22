@@ -62,7 +62,7 @@ namespace geometry{
         this->reset();
         for(auto dim: mat.dimension())
             this->m_size.push_back(dim);
-        for(auto elt: mat.getElements())
+        for(auto elt: mat)
             this->m_data.push_back(static_cast<T>(elt));
         return *this;
     }
@@ -237,10 +237,11 @@ namespace geometry{
     void Matrix<T>::setValues(const std::vector<T> &values)
     {
         this->checkLength(values.size());
-        std::copy(values.begin(), values.end(), m_data.begin());
+        std::copy(std::begin(values), std::end(values), std::begin(*this));
     }
 
     //TO BE IMPLEMENTED
+    /*
     template<class T>
     void Matrix<T>::resize(const std::size_t line, const std::size_t column)
     {
@@ -250,6 +251,7 @@ namespace geometry{
         m_size.at(0) = line;
         m_size.at(1) = column;
     }
+    */
 
     // =========================== PROTECTED METHODS ==========================
     // --------------------- ASK INFO MEMBERS (-> const) ----------------------
@@ -273,7 +275,12 @@ namespace geometry{
     // ------------------ SANITY CHECKS MEMBERS (-> const) --------------------
 
     // ----------------------- DATA MODIFIER MEMBERS ----------------------
-
+    template<class T>
+    void Matrix<T>::setSize(std::initializer_list<std::size_t> list){
+            this->checkLength(utils::multiplyElements(std::vector<std::size_t>{list}));
+            m_size.clear();
+            std::copy(std::begin(list), std::end(list), std::back_inserter(m_size));
+        }
     //TO BE IMPLEMENTED
 
 }
