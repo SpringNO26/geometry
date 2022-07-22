@@ -37,7 +37,7 @@ namespace geometry{
     }
 
     template<class T>
-    Matrix<T>::Matrix(const utils::MatrixConstructorHelper<T>& ope):
+    Matrix<T>::Matrix(const utils::MatrixConstructorHelper<T>& ope)
         :Matrix<T>::Matrix(ope.nLines(), ope.nColumns())
     {
         for(std::size_t i=0; i<ope.nLines()*ope.nColumns(); i++)

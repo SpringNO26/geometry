@@ -100,21 +100,12 @@ namespace geometry{
         // ------------------- ASK INFO MEMBERS (-> const) --------------------
         std::size_t nLines()   const {return m_size.at(0);}
         std::size_t nColumns() const {return m_size.at(1);}
-        std::size_t length() const {
-            return std::accumulate(std::begin(m_size),
-                                   std::end(m_size),
-                                   1,
-                                   std::multiplies<>()
-                                   );
-        }
+        std::size_t length() const {return utils::multiplyElements(m_size);}
         const std::vector<std::size_t>& dimension() const {return m_size;}
-        void print() const;
-        bool isZero() const{
-            return std::all_of(m_data.begin(),
-                               m_data.end(),
-                               [](auto i) { return i==0; });
-        }
+        bool isZero() const {utils::areAllElementsZero(m_data);}
         T at(std::size_t index) const {return m_data.at(index);}
+
+        void print() const;
         std::vector<T> getLine (const std::size_t line) const;
         std::vector<T> getColumn (const std::size_t line) const;
 

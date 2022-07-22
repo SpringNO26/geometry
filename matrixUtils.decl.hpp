@@ -20,6 +20,23 @@ namespace geometry
     namespace utils{
         using Coord = std::array<std::size_t,2>;
 
+        template<typename T>
+        bool areAllElementsZero(const std::vector<T>& vec)
+        {
+            return std::all_of(std::begin(vec),
+                               std::end(vec),
+                               [](auto i) { return i==0; });
+        }
+
+        template<typename T>
+        T multiplyElements(const std::vector<T>& vec) {
+            return std::accumulate(std::begin(vec),
+                                   std::end(vec),
+                                   1,
+                                   std::multiplies<>()
+                                   );
+        }
+
         template <class T>
         class MatrixConstructorHelper
         {
@@ -27,7 +44,7 @@ namespace geometry
             const std::vector<T>* mp_data{};
             const std::vector<T>* mp_values{};
             const std::vector<std::size_t>* mp_size{};
-        
+
         public:
             MatrixConstructorHelper() = delete;
             MatrixConstructorHelper(T value, const std::vector<T>* data, const std::vector<std::size_t>* size):
@@ -80,7 +97,7 @@ namespace geometry
                 MatrixConstructorHelper<T>(values, data, size) {}
 
             ~SoustractionMCH() {}
-            
+
             T operation(T value, std::size_t index=0) const override {return value-this->mp_values->at(index);}
         };
 
@@ -95,7 +112,7 @@ namespace geometry
                 MatrixConstructorHelper<T>(values, data, size) {}
 
             ~MultiplicationMCH() {}
-            
+
             T operation(T value, std::size_t index=0) const override {return value*this->mp_values->at(index);}
         };
 
@@ -110,7 +127,7 @@ namespace geometry
                 MatrixConstructorHelper<T>(values, data, size) {}
 
             ~DivisionMCH() {}
-            
+
             T operation(T value, std::size_t index=0) const override {return value/this->mp_values->at(index);}
         };
     }
