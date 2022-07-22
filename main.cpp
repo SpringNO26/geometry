@@ -66,6 +66,8 @@ int main()
     yy = xx * xx / 100;
     yy.print();
 
-    geometry::Matrix<float> zz;
+    geometry::Matrix<double> zz;
+    zz = yy;
+    zz += 0.1;
     zz.print();
 }
