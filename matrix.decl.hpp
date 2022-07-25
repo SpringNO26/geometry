@@ -112,6 +112,7 @@ namespace geometry{
         void print() const;
         std::vector<T> getLine (const std::size_t line) const;
         std::vector<T> getColumn (const std::size_t line) const;
+        const std::vector<T>& getElements() const {return m_data;}
 
         // ----------------------- DATA MODIFIER MEMBERS ----------------------
         void clear() {std::fill(m_data.begin(), m_data.end(), 0);}
@@ -140,7 +141,6 @@ namespace geometry{
 
         int flatCoord(const Coord coord) const;
         Coord coord2D(const std::size_t flat) const;
-        const std::vector<T>& getElements() const {return m_data;}
 
         // ---------------- SANITY CHECKS MEMBERS (-> const) ------------------
         // ---> all these methods can throws exceptions
@@ -158,7 +158,6 @@ namespace geometry{
 
         // ----------------------- DATA MODIFIER MEMBERS ----------------------
         void setSize(std::initializer_list<std::size_t> list);
-
     };
 
 }
